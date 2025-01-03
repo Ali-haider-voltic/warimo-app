@@ -14,6 +14,15 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'focus-red': '#FC5A3F',
+        'primary':'#FC5A3F',
+        'secondary':'#131313',
+        'grey':'#A5A5A7',
+        'lightGrey':'#6A6A6C'
+      },
+      fontSize: {
+        'base-font':'12px',
+        'large-font':'14px',
       },
     },
   },
