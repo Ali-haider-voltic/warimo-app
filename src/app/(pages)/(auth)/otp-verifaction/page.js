@@ -1,19 +1,22 @@
 "use client";
-import React, { useState, useRef } from "react";
-import Image from "next/image";
+import React, { useState, useRef, useEffect } from "react";
+import { Timer } from 'lucide-react';
 import { useRouter } from "next/navigation";
-//layout
+// Layout
 import AuthLayout from "../_authLayout/layout";
-// component
+// Component
 import Button from "../../../_components/button";
 
-const Login = () => {
+const OtpVerification = ({ duration = 6 }) => {
     const router = useRouter();
-    const [otp, setOtp] = useState(["", "", "", ""]);
+    const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef([]);
+    const [timeLeft, setTimeLeft] = useState(duration);
+    const [timer, setTimer] = useState(30);
+    const [isTimerVisible, setIsTimerVisible] = useState(true);
 
     const handleInputChange = (value, index) => {
-        if (/^[0-9]?$/.test(value)) {
+        if (/^[0-9]?$/.test(value)) {  // only numeric values allowed
             const updatedOtp = [...otp];
             updatedOtp[index] = value;
             setOtp(updatedOtp);
@@ -36,6 +39,33 @@ const Login = () => {
         console.log("Entered OTP:", enteredOtp);
         // Send OTP to server for verification
     };
+
+    useEffect(() => {
+        // Handle countdown timer
+        if (timeLeft <= 0) return;
+
+        const interval = 1000; // Update every second
+        const timer = setInterval(() => {
+            setTimeLeft((prev) => Math.max(prev - 1, 0));  // Decrement by 1 second
+        }, interval);
+
+        return () => clearInterval(timer);  // Cleanup on component unmount
+    }, [timeLeft]);
+
+    useEffect(() => {
+        if (timer > 0) {
+            const interval = setInterval(() => {
+                setTimer((prevTimer) => prevTimer - 1);
+            }, 1000);
+            return () => clearInterval(interval); // Cleanup interval on component unmount
+        } else {
+            setIsTimerVisible(false); // Hide timer after 30 seconds
+        }
+    }, [timer]);
+
+    // Calculate clockwise border removal as a percentage
+
+
     return (
         <AuthLayout
             authPargraph="Leverage AI-driven strategies to gradually increase sending volume. Build and maintain a strong sender reputation with minimal effort. Optimize sending patterns to align with ISP best practices."
@@ -45,7 +75,7 @@ const Login = () => {
         >
             <div className="flex flex-col items-center justify-center">
                 <div className="text-large-font text-lightGrey">
-                    Enter 4 digit OTP code sent to{" "}
+                    Enter 6-digit OTP code sent to{" "}
                     <b className="text-[#131313]">Heaven24@yahoo.com</b>
                 </div>
                 <div className="flex justify-center gap-4 mb-6 mt-6">
@@ -60,20 +90,42 @@ const Login = () => {
                             }
                             onKeyDown={(e) => handleKeyDown(e, index)}
                             maxLength="1"
-                            className="w-24 h-24 text-center text-primary font-bold text-xl focus:border-focus-red border rounded-full  focus:outline-none"
+                            className="w-16 h-16 text-center text-primary font-bold text-xl focus:border-focus-red border rounded-full  focus:outline-none"
                         />
                     ))}
                 </div>
-                <div className="text-center mt-[10px]">
+
+                {isTimerVisible && (
+                    <div className="w-full flex justify-end items-center pr-24">
+                        <div className={`relative w-20 flex justify-center items-center rounded-full`}>
+                            <div
+                                className={`absolute inset-0 rounded-full border-2 border-primary`}
+                                style={{
+                                    clipPath: `inset(${(30 - timer) / 30 * 100}% 0 0 0)`,
+                                    transition: 'clip-path 1s linear'
+                                }}
+                            ></div>
+                            <div className="flex items-center space-x-1">
+                                <span className="text-lg font-medium text-linkcolor">
+                                    00:{timer.toString().padStart(2, '0')}
+                                </span>
+                                <Timer className="text-sm w-4 h-4 text-linkcolor" />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div className="text-center mt-4">
                     <Button
+                    disabled
                         text="Verify"
                         className="bg-primary text-white min-w-[180px] h-[44px] shadow-[1px_2px_6px_0px_#684FFF1A]"
+                        onClick={handleSubmit}
                     />
                 </div>
             </div>
-
-            <div></div>
         </AuthLayout>
     );
 };
-export default Login;
+
+export default OtpVerification;

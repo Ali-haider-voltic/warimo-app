@@ -32,12 +32,14 @@ const Login = () => {
                         text="Open Gmail"
                         startIcon="/icon-gmail.png"
                         icon="/icon-arrow-up.png"
+                        iconWidth={24}
                         className="bg-white text-secondary min-w-[148px] h-[32px]"
                     />
                     <Button
                         text="Open Outlook"
                         startIcon="/icon-outlook.png"
                         icon="/icon-arrow-up.png"
+                        iconWidth={24}
                         className="bg-white text-secondary min-w-[148px] h-[32px]"
                     />
                 </div>

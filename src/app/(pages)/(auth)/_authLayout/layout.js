@@ -9,10 +9,10 @@ const AuthLayout = ({ children, logoText, accountText,buttonText,paragrapgh,left
     return (
         <div className="grid grid-cols-1 sm:grid-cols-12">
             {/* Left Section */}
-            <div className="sm:col-span-6 lg:col-span-5 lg:mr-[19px]">
+            <div className="hidden sm:block sm:col-span-6 lg:col-span-5 lg:mr-[19px]">
                 <div className="bg-[#131313] min-h-screen flex flex-col justify-between lg:p-12 md:p-8 p-6">
                     {/* Header */}
-                    <div className="bg-primary w-[52px] h-[52px] flex justify-center items-center rounded-full">
+                    <div className="bg-primary w-[52px] h-[52px] flex justify-center items-center rounded-full cursor-pointer">
                         <Image src="/icon-home.svg" width={24} height={24} alt="Home Icon" />
                     </div>
 

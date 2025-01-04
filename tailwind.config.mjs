@@ -18,7 +18,8 @@ export default {
         'primary':'#FC5A3F',
         'secondary':'#131313',
         'grey':'#A5A5A7',
-        'lightGrey':'#6A6A6C'
+        'lightGrey':'#6A6A6C',
+        'danger':'#c00'
       },
       fontSize: {
         'base-font':'12px',
@@ -26,5 +27,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 };

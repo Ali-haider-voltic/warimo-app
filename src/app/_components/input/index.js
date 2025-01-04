@@ -1,9 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { Eye, EyeOff } from 'lucide-react';
-import clsx from 'clsx';
+import { Eye, EyeOff } from "lucide-react";
 
-const Index = ({ label, placeholder, type, required, className }) => {
+const Input = ({
+    label,
+    placeholder,
+    type,
+    required,
+    className,
+    value,
+    name,
+    error,
+    ...rest
+}) => {
     const [isPasswordVisible, setPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -11,25 +20,31 @@ const Index = ({ label, placeholder, type, required, className }) => {
     };
 
     return (
-        <div  className={className}>
+        <div className={`relative ${className}`}>
             <label className="block text-sm sm:text-md text-black mb-1 text-[#131313] text-[14px] mb-[13px] font-medium">
-                {label}{required && <span className='text-[#E9190F] ml-1'>*</span>}
+                {label}
+                {required && <span className="text-[#E9190F] ml-1">*</span>}
             </label>
 
             {type === "password" ? (
                 <div className="relative">
                     <input
+                        name={name}
+                        required={required}
                         type={isPasswordVisible ? "text" : "password"}
-                        className="w-full placeholder-gray-500 focus:border-focus-red  h-[48px] px-3 sm:px-4 py-2 border rounded-full focus:outline-none"
+                        className={`w-full placeholder-gray-500 ${error ? 'focus:border-danger' : 'focus:border-focus-red'} text-base-font h-[48px] px-3 sm:px-4 py-2 border rounded-full focus:outline-none`}
                         placeholder={placeholder}
+                        {...rest}
                     />
                     {!isPasswordVisible ? (
                         <EyeOff
+                            size={15}
                             className="absolute right-[17px] top-[50%] transform -translate-y-1/2 cursor-pointer text-[#6A6A6C]"
                             onClick={togglePasswordVisibility}
                         />
                     ) : (
                         <Eye
+                            size={15}
                             className="absolute right-[17px] top-[50%] transform -translate-y-1/2 cursor-pointer text-[#6A6A6C]"
                             onClick={togglePasswordVisibility}
                         />
@@ -37,13 +52,19 @@ const Index = ({ label, placeholder, type, required, className }) => {
                 </div>
             ) : (
                 <input
+                    name={name}
                     type={type}
-                    className="w-full placeholder-gray-500 focus:border-focus-red focus:shadow-none h-[48px] px-3 sm:px-4 py-2 border rounded-full focus:outline-none"
+                    required={required}
+                    className={`w-full placeholder-gray-500 text-base-font  ${error ? 'focus:border-danger' : 'focus:border-focus-red'} focus:shadow-none h-[48px] px-3 sm:px-4 py-2 border rounded-full focus:outline-none`}
                     placeholder={placeholder}
+                    {...rest}
+                    onChange={(e) => e.target.value}
+                    value={value}
                 />
             )}
+            {error && <p className="text-[#E9190F] text-[12px] mt-1 absolute">{error}</p>}
         </div>
     );
 };
 
-export default Index;
+export default Input;
