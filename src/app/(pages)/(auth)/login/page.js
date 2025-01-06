@@ -119,7 +119,7 @@ const Login = () => {
             />
           </div>
           <div>
-            <div className="flex items-center my-6">
+            <div className="flex items-center my-6 mx-16">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="flex-shrink mx-4 text-gray-600 text-base-font">
                 OR
@@ -131,7 +131,7 @@ const Login = () => {
                 startIcon="/icon-gmail.png"
                 text="Sign in with Google"
                 iconWidth={24}
-                className="bg-white text-secondary min-w-[180px] h-[44px] shadow-[1px_2px_6px_0px_#684FFF1A]"
+                className="bg-white text-secondary min-w-[180px] h-[44px]"
               />
             </div>
           </div>

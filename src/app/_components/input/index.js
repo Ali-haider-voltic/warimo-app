@@ -21,7 +21,7 @@ const Input = ({
 
     return (
         <div className={`relative ${className}`}>
-            <label className="block text-sm sm:text-md text-black mb-1 text-[#131313] text-[14px] mb-[13px] font-medium">
+            <label className="block text-sm sm:text-md text-black mb-1 text-[#131313] text-[14px] mb-[12px] font-medium">
                 {label}
                 {required && <span className="text-[#E9190F] ml-0.5">*</span>}
             </label>
