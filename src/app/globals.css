@@ -9,7 +9,7 @@
     bottom: 16px;
 }
 .calc-height{
-    height: calc(100vh - 144px);
+    height: calc(100vh - 136px);
     overflow: auto;
 }
 [type='checkbox']:focus, [type='radio']:focus,[type='email']:focus,[type='password']:focus,[type='text']:focus,input:where(:not([type])):focus{

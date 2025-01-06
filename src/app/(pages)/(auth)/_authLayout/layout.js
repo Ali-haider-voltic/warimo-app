@@ -9,7 +9,7 @@ const AuthLayout = ({ children, logoText, accountText,buttonText,paragrapgh,left
     return (
         <div className="grid grid-cols-1 sm:grid-cols-12">
             {/* Left Section */}
-            <div className="hidden sm:block sm:col-span-6 lg:col-span-5 lg:mr-[19px]">
+            <div className="hidden sm:block sm:col-span-6 lg:col-span-5">
                 <div className="bg-[#131313] min-h-screen flex flex-col justify-between lg:p-12 md:p-8 p-6">
                     {/* Header */}
                     <div className="bg-primary w-[52px] h-[52px] flex justify-center items-center rounded-full cursor-pointer">
@@ -48,7 +48,7 @@ const AuthLayout = ({ children, logoText, accountText,buttonText,paragrapgh,left
                        {accountText && <span className="text-[14px] text-[#6A6A6C] font-normal">{accountText}</span> } 
                        {buttonText &&  <Button onClick={leftButtonClick} icon="/icon-arrow.png" text={buttonText} className="bg-white text-primary" /> }
                     </div>
-                    <div className={` pb-[41px] max-w-[552px] m-auto pr-[19px] flex flex-col justify-center calc-height`}>
+                    <div className={` max-w-[552px] m-auto  flex flex-col justify-center calc-height`}>
                         <div className="flex flex-col items-center mb-[24px]">
                             <Image src="/icon-brand-logo.svg" width={266} height={56} alt="Brand Logo" />
                             <h2 className="text-[#131313] text-[20px] font-medium mt-[12px]">{logoText}</h2>

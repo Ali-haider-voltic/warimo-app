@@ -23,7 +23,7 @@ const Input = ({
         <div className={`relative ${className}`}>
             <label className="block text-sm sm:text-md text-black mb-1 text-[#131313] text-[14px] mb-[13px] font-medium">
                 {label}
-                {required && <span className="text-[#E9190F] ml-1">*</span>}
+                {required && <span className="text-[#E9190F] ml-0.5">*</span>}
             </label>
 
             {type === "password" ? (
@@ -32,7 +32,7 @@ const Input = ({
                         name={name}
                         required={required}
                         type={isPasswordVisible ? "text" : "password"}
-                        className={`w-full placeholder-gray-500 ${error ? 'focus:border-danger' : 'focus:border-focus-red'} text-base-font h-[48px] px-3 sm:px-4 py-2 border rounded-full focus:outline-none`}
+                        className={`w-full placeholder-[#6A6A6C] placeholder:font-medium  ${error ? 'focus:border-danger' : 'focus:border-focus-red'} text-base-font border-none h-[52px] px-3 sm:px-4 py-2  rounded-full focus:outline-none`}
                         placeholder={placeholder}
                         {...rest}
                     />
@@ -55,7 +55,7 @@ const Input = ({
                     name={name}
                     type={type}
                     required={required}
-                    className={`w-full placeholder-gray-500 text-base-font  ${error ? 'focus:border-danger' : 'focus:border-focus-red'} focus:shadow-none h-[48px] px-3 sm:px-4 py-2 border rounded-full focus:outline-none`}
+                    className={`w-full placeholder-[#6A6A6C]  placeholder:font-medium  text-base-font  ${error ? 'focus:border-danger' : 'focus:border-focus-red'} border-none focus:shadow-none h-[52px] px-3 sm:px-4 py-2  rounded-full focus:outline-none`}
                     placeholder={placeholder}
                     {...rest}
                     onChange={(e) => e.target.value}

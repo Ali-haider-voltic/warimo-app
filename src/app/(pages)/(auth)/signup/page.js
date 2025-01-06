@@ -42,6 +42,20 @@ const SignUp = () => {
 
     try {
       const result = await dispatch(SignUpUser({ data })).unwrap();
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await res.json();
+  
+      if (res.ok) {
+        setSuccess(data.message);
+        setFormData({ name: "", email: "", password: "" });
+      } else {
+        setError(data.message || "Something went wrong.");
+      }
       if (result?.success) {
         toast.success("Account created successfully!");
         router.push("/dashboard"); // Redirect to dashboard or another page
@@ -82,6 +96,7 @@ const SignUp = () => {
                 {...register("firstName", { required: "First Name is required" })}
                 className="mb-[24px]"
                 label="First Name"
+                required
                 placeholder="Enter your first name"
                 error={errors.firstName?.message}
               />
@@ -91,6 +106,7 @@ const SignUp = () => {
                 {...register("lastName", { required: "Last Name is required" })}
                 className="mb-[24px]"
                 label="Last Name"
+                required
                 placeholder="Enter your last name"
                 error={errors.lastName?.message}
               />
@@ -105,6 +121,7 @@ const SignUp = () => {
                 message: "Invalid email address",
               },
             })}
+            required
             className="mb-[24px]"
             label="Email Address"
             placeholder="Enter your email address"
@@ -119,6 +136,7 @@ const SignUp = () => {
                 message: "Password must be at least 6 characters",
               },
             })}
+            required
             className="mb-[24px]"
             label="Password"
             type="password"
@@ -132,6 +150,7 @@ const SignUp = () => {
               validate: (value) =>
                 value === watch("password") || "Passwords do not match",
             })}
+            required
             className="mb-[16px]"
             label="Confirm Password"
             type="password"
