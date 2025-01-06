@@ -52,7 +52,7 @@ const AuthLayout = ({ children, logoText, accountText,buttonText,paragrapgh,left
                         <div className="flex flex-col items-center mb-[24px]">
                             <Image src="/icon-brand-logo.svg" width={266} height={56} alt="Brand Logo" />
                             <h2 className="text-[#131313] text-[20px] font-medium mt-[12px]">{logoText}</h2>
-                            {paragrapgh && <p className='text-lightGrey font-large-font text-center mt-2 mb-3'>{paragrapgh}</p>}
+                            {paragrapgh && <p className='text-lightGrey font-large-font text-center mt-[12px]'>{paragrapgh}</p>}
                         </div>
                         {children}
                         <div className="text-center text-grey text-base-font absolute center-text">

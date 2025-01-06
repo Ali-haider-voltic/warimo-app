@@ -51,7 +51,7 @@
                         })}
                         error={errors.email?.message}
                     />
-                    <div className="text-center mt-[10px]">
+                    <div className="text-center">
                         <Button
                             type="submit"
                             text="Send Reset Link"
