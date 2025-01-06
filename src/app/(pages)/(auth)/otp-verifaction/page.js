@@ -6,14 +6,12 @@ import { useRouter } from "next/navigation";
 import AuthLayout from "../_authLayout/layout";
 // Component
 import Button from "../../../_components/button";
+import TimeCounter from '../../../_components/timeCounter'
 
-const OtpVerification = ({ duration = 6 }) => {
+const OtpVerification = () => {
     const router = useRouter();
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef([]);
-    const [timeLeft, setTimeLeft] = useState(duration);
-    const [timer, setTimer] = useState(30);
-    const [isTimerVisible, setIsTimerVisible] = useState(true);
 
     const handleInputChange = (value, index) => {
         if (/^[0-9]?$/.test(value)) {  // only numeric values allowed
@@ -40,31 +38,6 @@ const OtpVerification = ({ duration = 6 }) => {
         // Send OTP to server for verification
     };
 
-    useEffect(() => {
-        // Handle countdown timer
-        if (timeLeft <= 0) return;
-
-        const interval = 1000; // Update every second
-        const timer = setInterval(() => {
-            setTimeLeft((prev) => Math.max(prev - 1, 0));  // Decrement by 1 second
-        }, interval);
-
-        return () => clearInterval(timer);  // Cleanup on component unmount
-    }, [timeLeft]);
-
-    useEffect(() => {
-        if (timer > 0) {
-            const interval = setInterval(() => {
-                setTimer((prevTimer) => prevTimer - 1);
-            }, 1000);
-            return () => clearInterval(interval); // Cleanup interval on component unmount
-        } else {
-            setIsTimerVisible(false); // Hide timer after 30 seconds
-        }
-    }, [timer]);
-
-    // Calculate clockwise border removal as a percentage
-
 
     return (
         <AuthLayout
@@ -78,7 +51,7 @@ const OtpVerification = ({ duration = 6 }) => {
                     Enter 6-digit OTP code sent to{" "}
                     <b className="text-[#131313]">Heaven24@yahoo.com</b>
                 </div>
-                <div className="flex justify-center gap-4 mb-6 mt-6">
+                <div className="flex justify-center gap-6 mb-2.5 mt-6">
                     {otp.map((value, index) => (
                         <input
                             key={index}
@@ -94,30 +67,13 @@ const OtpVerification = ({ duration = 6 }) => {
                         />
                     ))}
                 </div>
-
-                {isTimerVisible && (
-                    <div className="w-full flex justify-end items-center pr-24">
-                        <div className={`relative w-20 flex justify-center items-center rounded-full`}>
-                            <div
-                                className={`absolute inset-0 rounded-full border-2 border-primary`}
-                                style={{
-                                    clipPath: `inset(${(30 - timer) / 30 * 100}% 0 0 0)`,
-                                    transition: 'clip-path 1s linear'
-                                }}
-                            ></div>
-                            <div className="flex items-center space-x-1">
-                                <span className="text-lg font-medium text-linkcolor">
-                                    00:{timer.toString().padStart(2, '0')}
-                                </span>
-                                <Timer className="text-sm w-4 h-4 text-linkcolor" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <div className="flex justify-end items-end w-full mr-[60px]">
+                    <TimeCounter />
+                </div>
 
                 <div className="text-center mt-4">
                     <Button
-                    disabled
+                        disabled
                         text="Verify"
                         className="bg-primary text-white min-w-[180px] h-[44px] shadow-[1px_2px_6px_0px_#684FFF1A]"
                         onClick={handleSubmit}
