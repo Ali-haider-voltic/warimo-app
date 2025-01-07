@@ -24,10 +24,10 @@ export const loginUser = createAsyncThunk(
 );
 
 export const SignUpUser = createAsyncThunk(
-  'auth/SignUpUser',
+  'auth/signup',
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://dummyjson.com/auth/signUp', {
+      const response = await fetch('api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),

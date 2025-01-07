@@ -41,7 +41,14 @@ const SignUp = () => {
     setError("");
 
     try {
-      const result = await dispatch(SignUpUser({ data })).unwrap();
+      const result = await dispatch(SignUpUser({ data })).unwrap()
+  
+      if (res.ok) {
+        setSuccess(data.message);
+        setFormData({ name: "", email: "", password: "" });
+      } else {
+        setError(data.message || "Something went wrong.");
+      }
       if (result?.success) {
         toast.success("Account created successfully!");
         router.push("/dashboard"); // Redirect to dashboard or another page

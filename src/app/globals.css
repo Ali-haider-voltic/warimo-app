@@ -21,3 +21,18 @@
 :disabled{
     opacity: 0.5;
 }
+.hover-effect{
+    height: 85px;
+    top: -32px;
+    z-index: -1;
+}
+.high-z-index{
+    z-index: 999999;
+}
+.ant-tooltip-content .ant-tooltip-inner{
+    background-color: rgb(252 90 63);
+    padding: 6px 12px;
+}
+.ant-tooltip-arrow::before{
+    background: rgb(252 90 63)!important;
+}
