@@ -36,3 +36,11 @@
 .ant-tooltip-arrow::before{
     background: rgb(252 90 63)!important;
 }
+.sub-dollar{
+    font-size: 12px;
+    left: 5px;
+    bottom: -8px;
+}
+.ant-tooltip{
+    z-index: 1;
+}

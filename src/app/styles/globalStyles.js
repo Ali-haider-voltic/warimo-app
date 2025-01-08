@@ -10,9 +10,15 @@ const GlobalStyle = createGlobalStyle`
     .add-shape{
     background-image: url('./bg-union-shape.png');
         background-repeat: no-repeat;
-    background-size: 10%;
-    height: 500px;
-    background-position: 0px 105px;
+    background-size: 17%;
+    background-position: 0px 33px;
+}
+    .add-bg-image{
+        background-image: url('./bg-shape.png');
+        background-repeat: no-repeat;
+    background-size: 5%;
+    background-position: right;
+    }
 
 .pricing-title {
   position: relative;
@@ -48,6 +54,14 @@ const GlobalStyle = createGlobalStyle`
 .pricing-title::after {
   right: -122px; /* Adjust the spacing from the text */
 }
+  .bg-dotted{
+     background-image: url('./bg-dotted.png');
+            background-repeat: no-repeat;
+    background-size: 100%;
+    height:200px;
+    border-radius:10px;
+    background-position: center
+  }
 
 `;
 

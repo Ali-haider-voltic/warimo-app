@@ -1,19 +1,99 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+const navLinks = [
+  { name: 'Home', href: '#' },
+  { name: 'About Us', href: '#' },
+  { name: 'Pricing', href: '#' },
+  { name: 'Product Tour', href: '#' },
+];
+
+const actionLinks = [
+  { name: 'Sign In', href: '#' },
+  { name: 'Sign Up', href: '#', primary: true },
+];
+
+const MobileNav = ({ isOpen, toggleMenu }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{
+        opacity: isOpen ? 1 : 0,
+        y: isOpen ? 0 : -20,
+      }}
+      transition={{ duration: 0.3 }}
+      className="absolute top-16 left-0 w-full bg-black z-50 px-6 py-2"
+    >
+      {navLinks.map((link) => (
+        <a
+          key={link.name}
+          href={link.href}
+          className="block text-white group text-large-font py-2 px-4 md:py-0"
+        >
+          {link.name}
+          <span className="absolute inset-0 -z-10 bg-[#FC5A3F] skew-x-[-12deg] scale-0 origin-left group-hover:scale-100 transition duration-300" />
+        </a>
+      ))}
+      <div className="mt-4 space-y-4">
+        {actionLinks.map((link) => (
+          <a
+            key={link.name}
+            href={link.href}
+            className={`block text-center px-4 py-2 rounded-full transition duration-300 ${
+              link.primary
+                ? 'bg-[#FC5A3F] hover:bg-orange-600'
+                : 'text-base-font hover:bg-orange-600'
+            }`}
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+const DesktopNav = () => (
+  <div className="hidden md:flex space-x-4 items-center">
+    {navLinks.map((link) => (
+      <a
+        key={link.name}
+        href={link.href}
+        className="text-white group text-large-font px-2"
+      >
+        {link.name}
+      </a>
+    ))}
+    {actionLinks.map((link) => (
+      <a
+        key={link.name}
+        href={link.href}
+        className={`${
+          link.primary
+            ? 'bg-[#FC5A3F] min-w-[100px] text-center text-base-font px-4 py-2 rounded-full h-[40] hover:bg-orange-600'
+            : 'text-white group text-large-font px-2'
+        }`}
+      >
+        {link.name}
+      </a>
+    ))}
+  </div>
+);
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-black text-white fixed top-0 left-0 w-full z-50">
+    <div className="bg-black text-white fixed h-[90px] top-0 left-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between py-6 px-4">
         {/* Logo */}
         <div className="text-xl font-bold text-orange-500">
           <Image src="/image-logo.png" width={164} height={32} alt="no-logo" />
         </div>
 
-        {/* Hamburger Menu for Mobile */}
+        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -36,78 +116,14 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Navigation Menu */}
-        <nav
-          className={`${
-            isMenuOpen ? 'block' : 'hidden'
-          } md:flex  absolute md:relative top-16 md:top-auto left-0 w-full md:w-auto bg-black md:bg-transparent z-50 md:z-auto px-6 py-2 md:px-0`}
-        >
-          {/* Navigation Links */}
-          <a
-            href="#"
-            className="block md:inline-block relative text-white group text-large-font transition duration-300 high-z-index py-2 px-4 md:py-0"
-          >
-            Home
-            <span className="absolute hover-effect inset-0 -z-10 bg-[#FC5A3F] skew-x-[-12deg] scale-0 skew-x-12 origin-left group-hover:scale-100 transition duration-300"></span>
-          </a>
-          <a
-            href="#"
-            className="block md:inline-block relative text-white group text-large-font transition duration-300 high-z-index py-2 px-4 md:py-0"
-          >
-            About Us
-            <span className="absolute hover-effect inset-0 -z-10 bg-[#FC5A3F] skew-x-[-12deg] scale-0 skew-x-12 origin-left group-hover:scale-100 transition duration-300"></span>
-          </a>
-          <a
-            href="#"
-            className="block md:inline-block relative text-white group text-large-font transition duration-300 high-z-index py-2 px-4 md:py-0"
-          >
-            Pricing
-            <span className="absolute hover-effect inset-0 -z-10 bg-[#FC5A3F] skew-x-[-12deg] scale-0 skew-x-12 origin-left group-hover:scale-100 transition duration-300"></span>
-          </a>
-          <a
-            href="#"
-            className="block md:inline-block relative text-white group text-large-font transition duration-300 high-z-index py-2 px-4 md:py-0"
-          >
-            Product Tour
-            <span className="absolute hover-effect inset-0 -z-10 bg-[#FC5A3F] skew-x-[-12deg] scale-0 skew-x-12 origin-left group-hover:scale-100 transition duration-300"></span>
-          </a>
+        {/* Desktop Menu */}
+        <DesktopNav />
 
-          {/* Sign In and Sign Up Buttons for Mobile */}
-          <div className="block md:hidden mt-4 space-y-4">
-            <a
-              href="#"
-              className="block text-center text-base-font px-4 py-2 rounded-full hover:bg-orange-600 transition duration-300"
-            >
-              Sign In
-            </a>
-            <a
-              href="#"
-              className="block bg-[#FC5A3F] text-center text-base-font px-4 py-2 rounded-full hover:bg-orange-600 transition duration-300"
-            >
-              Sign Up
-            </a>
-          </div>
-        </nav>
-
-        {/* Action Buttons for Desktop */}
-        <div className="hidden md:flex space-x-4 items-center">
-          <a
-            href="#"
-            className="relative text-white group text-large-font transition duration-300 high-z-index px-2"
-          >
-            Sign In
-          </a>
-          <a
-            href="#"
-            className="bg-[#FC5A3F] text-base-font px-4 py-2 rounded-full hover:bg-orange-600 transition duration-300"
-          >
-            Sign Up
-          </a>
-        </div>
+        {/* Mobile Menu */}
+        <MobileNav isOpen={isMenuOpen} toggleMenu={() => setIsMenuOpen(!isMenuOpen)} />
       </div>
     </div>
   );
 };
 
 export default Index;
-
