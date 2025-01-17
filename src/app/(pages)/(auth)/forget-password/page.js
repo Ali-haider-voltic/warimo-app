@@ -15,7 +15,11 @@
     const Login = () => {
         const router = useRouter();
         // Initialize React Hook Form
-        const { register, handleSubmit, formState: { errors } } = useForm();
+        const { register,reset, handleSubmit, formState: { errors } } = useForm({
+            defaultValues: {
+              email: "",
+            },
+          });
         const dispatch = useDispatch();
         const { loading, error, forgotPasswordSuccess } = useSelector((state) => state.auth);
     
@@ -23,7 +27,7 @@
         // Form submit handler
         const onSubmit = (data) => {
             dispatch(forgotPassword(data));
-            // Submit form data to the server or trigger password reset logic
+            reset({email:''})
         };
 
         return (

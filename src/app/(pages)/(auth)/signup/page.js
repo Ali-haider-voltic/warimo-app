@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signIn } from 'next-auth/react';
 // Redux
-import { SignUpUser } from "../../../slices/authSlice";
-import { useDispatch } from "react-redux";
+import { SignUpUser,verifyGoogle } from "../../../slices/authSlice";
+import { useDispatch,useSelector } from "react-redux";
 // Layout
 import AuthLayout from "../_authLayout/layout";
 // Components
@@ -16,8 +17,11 @@ import Button from "../../../_components/button";
 
 const SignUp = () => {
   const router = useRouter();
+  
   const dispatch = useDispatch();
-  const [isChecked, setIsChecked] = useState(false); // State to track checkbox
+  const [isChecked, setIsChecked] = useState(false);
+  const { message, loading,data:responseData } = useSelector((state) => state.auth);
+  
   const [error, setError] = useState(""); // State to track error message
 
   const {
@@ -41,22 +45,15 @@ const SignUp = () => {
     setError("");
 
     try {
-      const result = await dispatch(SignUpUser({ data })).unwrap()
-  
-      if (res.ok) {
-        setSuccess(data.message);
-        setFormData({ name: "", email: "", password: "" });
-      } else {
-        setError(data.message || "Something went wrong.");
-      }
+      const result = await dispatch(SignUpUser({ router, credentials: data })).unwrap();
       if (result?.success) {
-        toast.success("Account created successfully!");
-        router.push("/dashboard"); // Redirect to dashboard or another page
+        toast.success(message);
+ 
       } else {
-        toast.error(result?.message || "Signup failed. Please try again.");
+        toast.error(message);
       }
     } catch (err) {
-      toast.error(err.message || "An error occurred during signup.");
+      toast.error(message);
     } finally {
       reset({
         firstName: "",
@@ -69,6 +66,10 @@ const SignUp = () => {
       setIsChecked(false);
     }
   };
+  const handleGoogleSignIn = () => {
+    window.location.href = "/api/auth/google";
+  };
+  
 
   return (
     <>
@@ -165,8 +166,9 @@ const SignUp = () => {
           <div className="text-center mt-[10px]">
             <Button
               type="submit"
-              text="Sign Up"
+              text={loading ? 'laoding...' : 'Sign In'}
               className="bg-primary text-white min-w-[180px] h-[44px]"
+              disabled={loading}
             />
           </div>
           <div>
@@ -177,16 +179,18 @@ const SignUp = () => {
               </span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
-            <div className="flex justify-center">
+         
+          </div>
+        </form>
+        <div className="flex justify-center">
               <Button
                 startIcon="/icon-gmail.png"
                 text="Sign in with Google"
+                onClick={handleGoogleSignIn}
                 iconWidth={24}
                 className="bg-white text-secondary min-w-[180px] h-[44px]"
               />
             </div>
-          </div>
-        </form>
       </AuthLayout>
       {/* ToastContainer for notifications */}
       <ToastContainer position="top-right" autoClose={3000} />

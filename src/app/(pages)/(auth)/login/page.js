@@ -17,7 +17,7 @@ import { loginUser } from "../../../slices/authSlice";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { user, loading, message } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -39,13 +39,11 @@ const Login = () => {
     try {
       const result = await dispatch(loginUser({ data })).unwrap();
       if (result?.success) {
-        toast.success("Login successful!");
-        router.push("/dashboard"); // Redirect to dashboard or any other page
-      } else {
-        toast.error(result?.message || "Login failed. Please try again.");
+        toast.success(result?.message);
+        router.push("/pricing"); // Redirect to dashboard or any other page
       }
     } catch (err) {
-      toast.error(err.message || "An error occurred during login.");
+      toast.error("An error occurred during login.");
     } finally {
       reset({
         email: "",
@@ -114,7 +112,8 @@ const Login = () => {
           <div className="text-center mt-[10px]">
             <Button
               type="submit"
-              text="Sign In"
+              text={loading ? 'loading...' : 'Sign In'}
+              disabled={loading}
               className="bg-primary text-white min-w-[180px] h-[44px]"
             />
           </div>

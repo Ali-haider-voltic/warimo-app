@@ -4,22 +4,22 @@ const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: [true, "Please provide a FirstName"],
-        unique: true,
     },
     lastName: {
         type: String,
         required: [true, "Please provide a LastName"],
-        unique: true,
     },
     email: {
         type: String,
         required: [true, "Please provide an email"],
-        unique: true,
+        unique: true, // Only email should be unique
     },
     password: {
         type: String,
         required: [true, "Please provide a password"],
-        unique: true,
+    },
+    otp: {
+        type: Number,
     },
     isVerified: {
         type: Boolean,
@@ -29,10 +29,18 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    forgetPasswordToken: String,
-    forgetPasswordTokenExpiry: Date,
-    verifyTokenExpiry: Date,
+    forgetPasswordToken: {
+        type: String,
+    },
+    forgetPasswordTokenExpiry: {
+        type: Date,
+    },
+    verifyTokenExpiry: {
+        type: Date,
+    },
+    otpExpires: { type: Date },
 });
 
+// Use existing model if already defined
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;
